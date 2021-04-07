@@ -1,19 +1,17 @@
 package tests;
 
 import base.TestBase;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.LoginPage;
 import pages.SignupPage;
-import pages.TrelloHomePage;
+import pages.HomePage;
 
 public class SmokeTest extends TestBase {
 
     @Test
     public void verifyHomePageIsDisplayed() {
-        TrelloHomePage homePage = new TrelloHomePage(getDriver());
+        HomePage homePage = new HomePage(getDriver());
         homePage.open();
         boolean result = homePage.isPageVisible();
         Assert.assertTrue(result);
@@ -23,7 +21,7 @@ public class SmokeTest extends TestBase {
     @Test
     public void verifyLoginPageIsDisplayed() throws InterruptedException {
         // Test Data
-        TrelloHomePage homePage = new TrelloHomePage(getDriver());
+        HomePage homePage = new HomePage(getDriver());
         LoginPage loginPage = new LoginPage(getDriver());
 
         // Test Steps
@@ -39,7 +37,7 @@ public class SmokeTest extends TestBase {
     @Test
     public void verifySignUpPageIsDisplayed() throws InterruptedException {
         // Test Data
-        TrelloHomePage homePage = new TrelloHomePage(getDriver());
+        HomePage homePage = new HomePage(getDriver());
         SignupPage signupPage = new SignupPage(getDriver());
 
         // Test Steps
