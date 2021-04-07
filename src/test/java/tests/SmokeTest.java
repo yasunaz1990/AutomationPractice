@@ -5,40 +5,50 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import pages.LoginPage;
+import pages.SignupPage;
+import pages.TrelloHomePage;
 
 public class SmokeTest extends TestBase {
 
     @Test
     public void verifyHomePageIsDisplayed() {
-        getDriver().get("https://trello.com");
-
-        // Banner Text Element
-        By loc_homepage_banner = By.xpath("//h1");
-        WebElement homepageBannerElement = getDriver().findElement(loc_homepage_banner);
-
-        boolean isBannerVisible = homepageBannerElement.isDisplayed();
-
-        // Assertions
-        Assert.assertTrue(isBannerVisible);
+        TrelloHomePage homePage = new TrelloHomePage(getDriver());
+        homePage.open();
+        boolean result = homePage.isPageVisible();
+        Assert.assertTrue(result);
     }
 
 
     @Test
     public void verifyLoginPageIsDisplayed() throws InterruptedException {
-        getDriver().get("https://trello.com");
+        // Test Data
+        TrelloHomePage homePage = new TrelloHomePage(getDriver());
+        LoginPage loginPage = new LoginPage(getDriver());
 
-        // Go to login page
-        By loc_login_link = By.linkText("Log in");
-        WebElement loginElement = getDriver().findElement(loc_login_link);
-        loginElement.click();
+        // Test Steps
+        homePage.open();
+        homePage.gotoLoginPage();
+        Thread.sleep(4000);
+        boolean result = loginPage.isLoginPageVisible();
 
-        Thread.sleep(1000);
+        // Test Assertion
+        Assert.assertTrue(result);
+    }
 
-        // Grab login banner text
-        By loc_loing_banner = By.xpath("//h1");
-        WebElement loginBanner = getDriver().findElement(loc_loing_banner);
-        String actualText = loginBanner.getText();   // code extracting the text
+    @Test
+    public void verifySignUpPageIsDisplayed() throws InterruptedException {
+        // Test Data
+        TrelloHomePage homePage = new TrelloHomePage(getDriver());
+        SignupPage signupPage = new SignupPage(getDriver());
 
-        Assert.assertEquals(actualText, "Log in to Trello!");
+        // Test Steps
+        homePage.open();
+        homePage.gotoSignUpPage();
+        Thread.sleep(2000);
+        boolean result = signupPage.isSignUpPageDisplayed();
+
+        // Test Assert
+        Assert.assertTrue(result);
     }
 }
